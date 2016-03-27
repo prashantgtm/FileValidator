@@ -4,40 +4,42 @@ import re
 
 class Queries:
     def __init__(self):
-        connection = DbConnection()
-        self.cursor = connection.getDbConnection
-        self.schema = ''
+        self.connection = DbConnection()
+        self.schema = 'shared_etl'
 
     def getRawTableName(self, clientName, fileName):
-        query ="Select `reqexp` from %s.raw_control where client_name ='%s';" % (self.schema, clientName)
+        cursor = self.connection.getDbConnection
+        query = "Select `reqexp` from %s.raw_control where client_name ='%s';" % (
+            self.schema, clientName)
         try:
-            self.cursor.excute(query)
+            cursor.execute(query)
         except Exception as error:
             exit(error)
-        regList = self.cursor.fetchall()
+        regList = cursor.fetchall()
         for regExp in regList:
             if re.match(regExp[0], fileName):
-                query = "Select `table_name` from %s.raw_control where client_name = '%s' and `regexp` = '%s'" % (self.schema, clientName, regExp[0])
+                query = "Select `table_name` from %s.raw_control where client_name = '%s' and `regexp` = '%s'" % (
+                    self.schema, clientName, regExp[0])
         try:
-            self.cursor.execute(query)
+            cursor.execute(query)
         except Exception as error:
             exit(error)
-        tableName = self.cursor.fetchone()
+        tableName = cursor.fetchone()
+        self.connection.closeConnection()
         return tableName
 
-    def getDatabaseHeader(self, clientName, rawTable):
-        query = "Select raw_file_columns from %s.metadata_control where client_name = '%s' and raw_table_name = '%s' and raw_file_columns <> 'null';" % (self.schema, clientName, rawTable)
+    def getDatabaseColumns(self, columnName, clientName, rawTable):
+        cursor = self.connection.getDbConnection
+        query = "Select `%s` from %s.metadata_control where client_name = '%s' and raw_table_name = '%s' and raw_file_columns <> 'null';" % (
+            columnName, self.schema, clientName, rawTable)
         try:
-            self.cursor.execute(query)
+            cursor.execute(query)
         except Exception as error:
             exit(error)
-        columns = self.cursor.fetchall()
+        columns = cursor.fetchall()
         dbColumns = []
-        for each in columns:
-            each =[x.strip(',') for x in each]
-            dbColumns.append(each[0])
+        for eachColumn in columns:
+            eachColumn = [x.strip(',') for x in eachColumn]
+            dbColumns.append(eachColumn[0])
+        self.connection.closeConnection()
         return dbColumns
-
-
-
-

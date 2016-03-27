@@ -1,22 +1,26 @@
+from configreader import ConfigReader
 import MySQLdb
 import sys
 
 
 class DbConnection:
     def __init__(self):
-        self.host = ''
-        self.username = ''
-        self.password = ''
-        self.defaultSchema = ''
-
-    def getDbConnection(self):
+        configreader = ConfigReader()
+        config = configreader.readConfig()
+        host = config.get('database', 'host')
+        username = config.get('database', 'username')
+        password = config.get('database', 'password')
+        schema = config.get('database', 'schema')
         try:
-            connection = MySQLdb.connect(self.host, self.username, self.password, self.defaultSchema)
+            self.conn = MySQLdb.connect(host, username, password, schema)
         except Exception as error:
             sys.exit(error)
-        cursor = connection.cursor()
+
+    def getDbConnection(self):
+        cursor = self.conn.cursor()
         return cursor
 
-if __name__ == '__main__':
-    conn = DbConnection()
-    conn.getDbConnection()
+    def closeConnection(self):
+        self.conn.close()
+
+
