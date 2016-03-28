@@ -46,5 +46,9 @@ class Queries:
         cursor.close()
         return dbColumns
 
+if __name__ == '__main__':
+    queries = Queries()
+    tablename = queries.getRawTableName('correctcare', 'candidates.03.22.2016.08.45.csv')
+    print queries.getDatabaseColumns('raw_file_columns','correctcare',tablename)
 
 
