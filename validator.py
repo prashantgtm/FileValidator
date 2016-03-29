@@ -11,7 +11,7 @@ class Validator(object):
         self.rawTableName = self.queries.getRawTableName(self.clientName, self.fileName)
         if self.validateHeader() is not True:
             exit(1)
-        self.readfile = ReadFile(self.fileName, self.clientName)
+        self.readfile = ReadFile(self.fileName, self.clientName, self.fileType)
         if self.validateContent() is True:
             exit(0)
         else:

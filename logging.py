@@ -12,4 +12,4 @@ class Logging:
                             format='%(asctime)s %(levelname)s %(message)s',
                             level=logging.INFO,
                             datefmt='%m/%d/%Y %I:%M:%S %p')
-        logging.info('---------------START OF THE EXECUTION-----------------')
+        logging.INFO('---------------START OF THE EXECUTION-----------------')
