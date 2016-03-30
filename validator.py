@@ -1,5 +1,6 @@
 from queries import Queries
 from readfile import ReadFile
+from checkvariable import CheckVariable
 
 
 class Validator(object):
@@ -9,7 +10,7 @@ class Validator(object):
         self.fileType = fileType
         self.queries = Queries()
         self.rawTableName = self.queries.getRawTableName(self.clientName, self.fileName)
-        if self.validateHeader() is not True:
+        if self.validateHeader() is False:
             exit(1)
         self.readfile = ReadFile(self.fileName, self.clientName, self.fileType)
         if self.validateContent() is True:
@@ -29,9 +30,18 @@ class Validator(object):
         dataType = self.queries.getDatabaseColumns('data_type', self.clientName, self.rawTableName)
         fileContent = self.readfile.getFileContent()
         for line in fileContent:
-            for i in range(len(line)):
-                if line[i] != dataType[i]:
-                    return False
+            for i in range(len(dataType)):
+                if dataType[i] == 'int':
+                    if CheckVariable.isInteger(line[i]) is False:
+                        exit(1)
+                elif dataType[i] == 'varchar':
+                    if CheckVariable.isVarchar(line[i])is False:
+                        exit(1)
+                elif dataType[i] == 'datetime':
+                    if CheckVariable.isDatetime(line[i])is False:
+                        exit(1)
+                else:
+                    exit(1)
         return True
 
 
