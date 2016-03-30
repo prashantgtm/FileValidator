@@ -34,10 +34,5 @@ class ReadFile(object):
         return content
 
 
-if __name__ == '__main__':
-    readfile = ReadFile('D:\Leapfrog\\newmodel\\files\candidates.03.22.2016.08.45.csv',
-                        'correctcare', 'candidate')
-    print readfile.getFileHeader()
-    for eachrow in readfile.getFileContent():
-        print eachrow
+
 

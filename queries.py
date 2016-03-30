@@ -18,7 +18,7 @@ class Queries:
             exit(error)
         regList = cursor.fetchall()
         for regExp in regList:
-            if re.match(regExp[0], fileName):
+            if re.search(regExp[0], fileName):
                 query1 = "Select `table_name` from %s.raw_control where client_name = '%s' and `regexp` = '%s'" % (
                     self.schema, clientName, regExp[0])
                 try:
@@ -45,10 +45,5 @@ class Queries:
         cursor.close()
         return dbColumns
 
-if __name__ == '__main__':
-    queries = Queries()
-    tablename = queries.getRawTableName('correctcare', 'candidates.03.22.2016.08.45.csv')
-    for eachcolumn in queries.getDatabaseColumns('raw_file_columns', 'correctcare', tablename):
-        print eachcolumn
 
 
