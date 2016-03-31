@@ -36,7 +36,7 @@ class CheckVariable:
 
     @staticmethod
     def isEmail(value):
-        if re.match('^.+@.+[com|in|net|COM|IN|NET]', value):
+        if re.match('^.+@.+[com|net]', value.lower()):
             return True
         else:
             print value
@@ -45,6 +45,8 @@ class CheckVariable:
     @staticmethod
     def isTimestamp(value):
         pass
+
+
 
 
 
