@@ -39,7 +39,6 @@ class CheckVariable:
         if re.match('^.+@.+[com|net]', value.lower()):
             return True
         else:
-            print value
             return False
 
     @staticmethod

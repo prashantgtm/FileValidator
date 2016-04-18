@@ -21,4 +21,9 @@ class DbConnection:
         return connection
 
 
+if __name__ == '__main__':
+    conn =DbConnection()
+    conn.getDbConnection()
+
+
 

@@ -7,7 +7,7 @@ class ConfigReader:
 
     def readConfig(self):
         config = ConfigParser.RawConfigParser()
-        config.read('config.ini')
+        config.read('E:\Training\python\FileValidator\config.ini')
         return config
 
 

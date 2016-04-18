@@ -1,3 +1,6 @@
+# ORIGINAL PROGRAMMER : PRASHANT GAUTAM
+# PARAMETERS : 1.CLIENT_NAME 2.FILE_NAME 3.FILE_TYPE
+
 from queries import Queries
 from readfile import ReadFile
 from checkvariable import CheckVariable
@@ -49,5 +52,5 @@ class Validator(object):
 
 
 if __name__ == '__main__':
-    validator = Validator('', '', '')
+    validator = Validator('correctcare', 'D:\Leapfrog\\newmodel\\files\jobs.03.22.2016.08.45.csv', 'req')
 
